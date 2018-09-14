@@ -1,7 +1,8 @@
-package io.github.regres
+package io.github.regres.ui.main
 
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import io.github.regres.R
 
 class MainActivity : AppCompatActivity() {
 
