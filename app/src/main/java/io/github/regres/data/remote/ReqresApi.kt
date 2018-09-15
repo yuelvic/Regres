@@ -6,7 +6,7 @@ import io.github.regres.data.entities.User
 import io.reactivex.Observable
 import retrofit2.http.*
 
-interface RegresApi {
+interface ReqresApi {
 
     @GET("unknown")
     fun getResources(): Observable<Result<Resource>>

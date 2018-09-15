@@ -6,10 +6,11 @@ import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
 import io.github.regres.ui.main.MainViewModel
+import io.github.regres.utils.ViewModelFactory
 import io.github.regres.utils.ViewModelKey
 
 @Module
-abstract class ViewModelFactory {
+abstract class ViewModelModule {
 
     @Binds
     internal abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory

@@ -3,7 +3,7 @@ package io.github.regres.di.modules
 import dagger.Module
 import dagger.Provides
 import io.github.regres.BuildConfig
-import io.github.regres.data.remote.RegresApi
+import io.github.regres.data.remote.ReqresApi
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -52,6 +52,6 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideRegresApi(retrofit: Retrofit): RegresApi = retrofit.create(RegresApi::class.java)
+    fun provideRegresApi(retrofit: Retrofit): ReqresApi = retrofit.create(ReqresApi::class.java)
 
 }

@@ -16,7 +16,7 @@ class DatabaseModule {
     @Singleton
     fun provideAppDatabase(app: App): AppDatabase {
         return Room.databaseBuilder(app, AppDatabase::class.java,
-                "regres-db").fallbackToDestructiveMigration().build()
+                "reqres-db").fallbackToDestructiveMigration().build()
     }
 
     @Provides
