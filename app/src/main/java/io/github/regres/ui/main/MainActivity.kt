@@ -1,13 +1,60 @@
 package io.github.regres.ui.main
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import io.github.regres.R
+import io.github.regres.adapter.MainAdapter
+import io.github.regres.databinding.ActivityMainBinding
+import io.github.regres.ui.base.BaseActivity
+import io.github.regres.utils.ViewModelFactory
+import io.github.regres.utils.extensions.DataState
+import io.github.regres.utils.extensions.getAppInjector
+import io.github.regres.utils.extensions.getViewModel
+import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.support.v4.swipeRefreshLayout
+import timber.log.Timber
+import javax.inject.Inject
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var mainViewModel: MainViewModel
+
+    private lateinit var mainAdapter: MainAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        this.binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
     }
+
+    override fun configureViewModel() {
+        getAppInjector().inject(this)
+        this.mainViewModel = getViewModel(this.viewModelFactory)
+    }
+
+    override fun configureUI() {
+        this.mainAdapter = MainAdapter(this)
+        this.recyclerView.adapter = this.mainAdapter
+
+        val layoutManager = LinearLayoutManager(this)
+        this.recyclerView.layoutManager = layoutManager
+    }
+
+    override fun configureBehavior() {
+        this.mainViewModel.getResources().observe(this, Observer {
+            this.binding.data = it
+            this.refreshLayout.isRefreshing = it.dataState == DataState.LOADING
+        })
+
+        this.refreshLayout.setOnRefreshListener {
+            this.mainAdapter.clear()
+            this.mainViewModel.getResources()
+        }
+    }
+
 }

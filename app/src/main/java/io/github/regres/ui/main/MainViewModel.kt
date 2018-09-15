@@ -16,14 +16,15 @@ class MainViewModel @Inject constructor(private val resourceRepository: Resource
 
     fun getResources(): MutableLiveData<Data<Result<Resource>>> {
         compositeDisposable.add(resourceRepository.getResources()
+                .doOnSubscribe {
+                    resourceLiveData.postValue(Data(dataState = DataState.LOADING, data = null))
+                }
                 .performOnMain()
                 .subscribe({
                     resourceLiveData.postValue(Data(dataState = DataState.SUCCESS, data = it))
                 }, {
                     Timber.e(it)
                     resourceLiveData.postValue(Data(dataState = DataState.ERROR, data = null))
-                }, {
-                    resourceLiveData.postValue(Data(dataState = DataState.LOADING, data = null))
                 }))
         return this.resourceLiveData
     }
