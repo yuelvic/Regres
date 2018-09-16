@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import io.github.regres.R
 import io.github.regres.data.entities.Resource
 import io.github.regres.databinding.ItemResourceBinding
-import timber.log.Timber
 
 class MainAdapter(private val context: Context): RecyclerView.Adapter<MainAdapter.ViewHolder>() {
 

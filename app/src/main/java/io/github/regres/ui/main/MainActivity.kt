@@ -13,7 +13,6 @@ import io.github.regres.utils.extensions.DataState
 import io.github.regres.utils.extensions.getAppInjector
 import io.github.regres.utils.extensions.getViewModel
 import kotlinx.android.synthetic.main.activity_main.*
-import org.jetbrains.anko.support.v4.swipeRefreshLayout
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -46,14 +45,15 @@ class MainActivity : BaseActivity() {
     }
 
     override fun configureBehavior() {
-        this.mainViewModel.getResources().observe(this, Observer {
+        this.mainViewModel.get().observe(this, Observer {
+            Timber.d(it.data.toString())
             this.binding.data = it
             this.refreshLayout.isRefreshing = it.dataState == DataState.LOADING
         })
 
         this.refreshLayout.setOnRefreshListener {
             this.mainAdapter.clear()
-            this.mainViewModel.getResources()
+            this.mainViewModel.get()
         }
     }
 

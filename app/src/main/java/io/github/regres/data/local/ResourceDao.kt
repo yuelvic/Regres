@@ -1,6 +1,5 @@
 package io.github.regres.data.local
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Query
 import io.github.regres.data.entities.Resource
@@ -9,6 +8,6 @@ import io.github.regres.data.entities.Resource
 interface ResourceDao: BaseDao<Resource> {
 
     @Query("SELECT * FROM resource")
-    fun getResources(): LiveData<Resource>
+    fun getResources(): List<Resource>
 
 }
