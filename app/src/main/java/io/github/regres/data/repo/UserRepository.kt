@@ -18,4 +18,9 @@ class UserRepository @Inject constructor(
             reqresApi.getUsers(page)
                     .doOnNext { Timber.d(it.data.toString()) }
                     .doOnError { Timber.e(it) }
+
+    fun deleteUser(id: Int): Observable<String> =
+            reqresApi.deleteUser(id)
+                    .doOnNext { Timber.d(it) }
+                    .doOnError { Timber.e(it) }
 }

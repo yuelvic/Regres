@@ -1,7 +1,9 @@
 package io.github.regres.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -9,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import io.github.regres.R
 import io.github.regres.data.entities.Resource
 import io.github.regres.databinding.ItemResourceBinding
+import io.github.regres.ui.user.AddActivity
 
 class MainAdapter(private val context: Context): RecyclerView.Adapter<MainAdapter.ViewHolder>() {
 
@@ -30,7 +33,7 @@ class MainAdapter(private val context: Context): RecyclerView.Adapter<MainAdapte
 
         holder.binding.userRecycler.adapter = adapter
         holder.apply {
-            bind(data)
+            bind(data, createCLickListener())
         }
     }
 
@@ -50,6 +53,13 @@ class MainAdapter(private val context: Context): RecyclerView.Adapter<MainAdapte
         notifyDataSetChanged()
     }
 
+    fun createCLickListener(): View.OnClickListener {
+        return View.OnClickListener {
+            val intent = Intent(context, AddActivity::class.java)
+            context.startActivity(intent)
+        }
+    }
+
     class ViewHolder(val context: Context, val binding: ItemResourceBinding):
             RecyclerView.ViewHolder(binding.root) {
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -57,7 +67,7 @@ class MainAdapter(private val context: Context): RecyclerView.Adapter<MainAdapte
         init {
             this.binding.userRecycler.layoutManager = layoutManager
         }
-        fun bind(data: Resource) {
+        fun bind(data: Resource, listener: View.OnClickListener) {
             this.binding.apply {
                 resource = data
                 executePendingBindings()

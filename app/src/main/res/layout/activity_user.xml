@@ -5,9 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View"/>
+        <import type="io.github.regres.utils.extensions.DataState"/>
         <variable
             name="user"
             type="io.github.regres.data.entities.User"/>
+        <variable
+            name="data"
+            type="io.github.regres.utils.extensions.Data"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,7 +21,7 @@
         tools:context=".ui.user.UserActivity">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar2"
+            android:id="@+id/userToolbar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="?attr/colorPrimary"
@@ -34,11 +39,11 @@
             app:layout_constraintDimensionRatio="w,1:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar2"
+            app:layout_constraintTop_toBottomOf="@+id/userToolbar"
             tools:srcCompat="@tools:sample/avatars[14]" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/btnDelete"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -48,6 +53,22 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:indeterminate="true"
+            android:visibility="@{data.dataState == DataState.LOADING ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

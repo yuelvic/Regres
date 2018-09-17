@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">Regres</string>
 
+    <string name="user_add">Add</string>
     <string name="user_delete">Delete this user</string>
+
+    <string name="user_name">Name</string>
+    <string name="user_job">Job</string>
 </resources>

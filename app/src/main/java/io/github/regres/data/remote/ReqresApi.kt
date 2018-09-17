@@ -18,7 +18,7 @@ interface ReqresApi {
     fun addUser(@Body user: User)
 
     @DELETE("users/{id}")
-    fun deleteUser(@Path("id") id: Int)
+    fun deleteUser(@Path("id") id: Int): Observable<String>
 
 
 }
