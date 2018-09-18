@@ -23,6 +23,7 @@ class MainViewModel @Inject constructor(
     private lateinit var users: List<User>
 
     private fun combine() {
+        Timber.d(resources.data.toString())
         for (resource in resources.data!!)
             resource.users = users
         resourceLiveData.postValue(Data(dataState = DataState.SUCCESS, data = resources))
@@ -54,6 +55,8 @@ class MainViewModel @Inject constructor(
                     if (it.data!!.isNotEmpty()) {
                         this.resources = it
                         combine()
+                    } else {
+                        resourceLiveData.postValue(Data(dataState = DataState.SUCCESS, data = null))
                     }
                 }, {
                     Timber.e(it)

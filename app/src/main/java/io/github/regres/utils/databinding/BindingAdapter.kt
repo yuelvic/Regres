@@ -31,6 +31,6 @@ fun setResourceData(recyclerView: RecyclerView, dataSet: List<Resource>?) {
 @BindingAdapter("data")
 fun setUserData(recyclerView: RecyclerView, dataSet: List<User>?) {
     if (recyclerView.adapter is UserAdapter) {
-        (recyclerView.adapter as UserAdapter).addUsers(dataSet)
+        (recyclerView.adapter as UserAdapter).setUsers(dataSet)
     }
 }

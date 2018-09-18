@@ -41,6 +41,13 @@ class UserAdapter(private val context: Context): RecyclerView.Adapter<UserAdapte
         }
     }
 
+    fun setUsers(dataSet: List<User>?) {
+        clear()
+        if (dataSet != null) {
+            this.dataSet.addAll(dataSet)
+        }
+    }
+
     fun clear() {
         this.dataSet.clear()
         notifyDataSetChanged()
