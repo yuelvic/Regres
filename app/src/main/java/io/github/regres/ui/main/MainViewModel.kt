@@ -51,8 +51,10 @@ class MainViewModel @Inject constructor(
                 .doOnSubscribe { resourceLiveData.postValue(Data(dataState = DataState.LOADING, data = null)) }
                 .performOnMain()
                 .subscribe({
-                    this.resources = it
-                    combine()
+                    if (it.data!!.isNotEmpty()) {
+                        this.resources = it
+                        combine()
+                    }
                 }, {
                     Timber.e(it)
                     resourceLiveData.postValue(Data(dataState = DataState.ERROR, data = null))
