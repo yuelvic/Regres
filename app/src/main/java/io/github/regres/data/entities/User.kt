@@ -15,5 +15,8 @@ data class User(
         @SerializedName("last_name")
         @ColumnInfo(name = "last_name")
         var lastName: String = "",
-        var avatar: String = ""
+        var avatar: String = "",
+
+        var name: String = "",
+        var job: String = ""
 )

@@ -53,7 +53,7 @@ class MainAdapter(private val context: Context): RecyclerView.Adapter<MainAdapte
         notifyDataSetChanged()
     }
 
-    fun createCLickListener(): View.OnClickListener {
+    private fun createCLickListener(): View.OnClickListener {
         return View.OnClickListener {
             val intent = Intent(context, AddActivity::class.java)
             context.startActivity(intent)
@@ -70,6 +70,7 @@ class MainAdapter(private val context: Context): RecyclerView.Adapter<MainAdapte
         fun bind(data: Resource, listener: View.OnClickListener) {
             this.binding.apply {
                 resource = data
+                clickListener = listener
                 executePendingBindings()
             }
         }

@@ -6,6 +6,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
 import io.github.regres.ui.main.MainViewModel
+import io.github.regres.ui.user.UserViewModel
 import io.github.regres.utils.ViewModelFactory
 import io.github.regres.utils.ViewModelKey
 
@@ -19,5 +20,10 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(MainViewModel::class)
     internal abstract fun bindMainActivity(mainViewModel: MainViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(UserViewModel::class)
+    internal abstract fun bindUserViewModel(userViewModel: UserViewModel): ViewModel
 
 }

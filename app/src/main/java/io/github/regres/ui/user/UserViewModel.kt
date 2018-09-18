@@ -19,18 +19,30 @@ class UserViewModel @Inject constructor(
     private val addUserLiveData = MutableLiveData<Data<User>>()
     private val deleteUserLiveData = MutableLiveData<Data<String>>()
 
+    fun addUser(user: User): MutableLiveData<Data<User>> {
+        compositeDisposable.add(userRepository.addUser(user)
+                .doOnSubscribe { addUserLiveData.postValue(Data(dataState = DataState.LOADING)) }
+                .performOnMain()
+                .subscribe({
+                    addUserLiveData.postValue(Data(dataState = DataState.SUCCESS, data = it))
+                }, {
+                    addUserLiveData.postValue(Data(dataState = DataState.ERROR))
+                })
+        )
+        return this.addUserLiveData
+    }
+
     fun deleteUser(id: Int): MutableLiveData<Data<String>> {
-        compositeDisposable.add(userRepository.deleteUser(id)
+        userRepository.deleteUser(id)
                 .doOnSubscribe {
                     deleteUserLiveData.postValue(Data(dataState = DataState.LOADING))
                 }
-                .performOnMain()
                 .subscribe({
                     deleteUserLiveData.postValue(Data(dataState = DataState.SUCCESS))
                 }, {
                     deleteUserLiveData.postValue(Data(dataState = DataState.ERROR))
                     Timber.e(it)
-                }))
+                }).dispose()
         return this.deleteUserLiveData
     }
 }

@@ -4,6 +4,7 @@ import io.github.regres.data.entities.Result
 import io.github.regres.data.entities.User
 import io.github.regres.data.local.UserDao
 import io.github.regres.data.remote.ReqresApi
+import io.reactivex.Completable
 import io.reactivex.Observable
 import timber.log.Timber
 import javax.inject.Inject
@@ -19,8 +20,12 @@ class UserRepository @Inject constructor(
                     .doOnNext { Timber.d(it.data.toString()) }
                     .doOnError { Timber.e(it) }
 
-    fun deleteUser(id: Int): Observable<String> =
+    fun addUser(user: User): Observable<User> =
+            reqresApi.addUser(user)
+                    .doOnNext { Timber.d(it.toString()) }
+                    .doOnError { Timber.e(it) }
+
+    fun deleteUser(id: Int): Completable =
             reqresApi.deleteUser(id)
-                    .doOnNext { Timber.d(it) }
                     .doOnError { Timber.e(it) }
 }

@@ -14,6 +14,7 @@ import io.github.regres.utils.extensions.getAppInjector
 import io.github.regres.utils.extensions.getViewModel
 import kotlinx.android.synthetic.main.activity_user.*
 import org.jetbrains.anko.sdk25.coroutines.onClick
+import timber.log.Timber
 import javax.inject.Inject
 
 class UserActivity : BaseActivity() {
@@ -28,7 +29,7 @@ class UserActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_user)
+        this.binding = DataBindingUtil.setContentView(this, R.layout.activity_user)
     }
 
     override fun configureViewModel() {
@@ -57,10 +58,7 @@ class UserActivity : BaseActivity() {
         this.btnDelete.onClick {
             this@UserActivity.userViewModel.deleteUser(data.id).apply {
                 observe(this@UserActivity, Observer {
-                    binding.data = it
-                    if (it.dataState == DataState.SUCCESS) {
-                        finish()
-                    }
+                    finish()
                 })
             }
         }

@@ -37,6 +37,9 @@ class MainActivity : BaseActivity() {
     }
 
     override fun configureUI() {
+        setSupportActionBar(this.toolbar)
+        title = "Reqres"
+
         this.mainAdapter = MainAdapter(this)
         this.recyclerView.adapter = this.mainAdapter
 
