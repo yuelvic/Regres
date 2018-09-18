@@ -20,23 +20,39 @@ class MainViewModel @Inject constructor(
     private val resourceLiveData = MutableLiveData<Data<Result<Resource>>>()
 
     private lateinit var resources: Result<Resource>
+    private lateinit var users: List<User>
 
-    private fun combine(users: List<User>) {
+    private fun combine() {
         for (resource in resources.data!!)
             resource.users = users
         resourceLiveData.postValue(Data(dataState = DataState.SUCCESS, data = resources))
     }
 
     fun get(): MutableLiveData<Data<Result<Resource>>> {
-        compositeDisposable.add(resourceRepository.getResources()
+        compositeDisposable.add(userRepository.getUsers(1)
                 .flatMap {
-                    this.resources = it
-                    return@flatMap userRepository.getUsers(1)
+                    this.users = it.data!!
+                    return@flatMap resourceRepository.getResources(1)
                 }
                 .doOnSubscribe { resourceLiveData.postValue(Data(dataState = DataState.LOADING, data = null)) }
                 .performOnMain()
                 .subscribe({
-                    combine(it.data!!)
+                    this.resources = it
+                    combine()
+                }, {
+                    Timber.e(it)
+                    resourceLiveData.postValue(Data(dataState = DataState.ERROR, data = null))
+                }))
+        return this.resourceLiveData
+    }
+
+    fun get(page: Int): MutableLiveData<Data<Result<Resource>>> {
+        compositeDisposable.add(resourceRepository.getResources(page)
+                .doOnSubscribe { resourceLiveData.postValue(Data(dataState = DataState.LOADING, data = null)) }
+                .performOnMain()
+                .subscribe({
+                    this.resources = it
+                    combine()
                 }, {
                     Timber.e(it)
                     resourceLiveData.postValue(Data(dataState = DataState.ERROR, data = null))

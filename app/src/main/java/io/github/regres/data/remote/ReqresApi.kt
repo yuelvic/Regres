@@ -10,7 +10,7 @@ import retrofit2.http.*
 interface ReqresApi {
 
     @GET("unknown")
-    fun getResources(): Observable<Result<Resource>>
+    fun getResources(@Query("page") page: Int): Observable<Result<Resource>>
 
     @GET("users")
     fun getUsers(@Query("page") page: Int): Observable<Result<User>>

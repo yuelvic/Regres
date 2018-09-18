@@ -14,8 +14,8 @@ class ResourceRepository @Inject constructor(
         private val reqresApi: ReqresApi,
         private val resourceDao: ResourceDao
 ) {
-    fun getResources(): Observable<Result<Resource>> =
-            reqresApi.getResources()
+    fun getResources(page: Int): Observable<Result<Resource>> =
+            reqresApi.getResources(page)
                     .doOnNext { Timber.d(it.data.toString()) }
                     .doOnError { Timber.e(it) }
 }

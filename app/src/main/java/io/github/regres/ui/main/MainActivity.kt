@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import io.github.regres.R
 import io.github.regres.adapter.MainAdapter
 import io.github.regres.databinding.ActivityMainBinding
@@ -26,6 +27,8 @@ class MainActivity : BaseActivity() {
 
     private lateinit var mainAdapter: MainAdapter
 
+    private var page = 1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         this.binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
@@ -45,6 +48,18 @@ class MainActivity : BaseActivity() {
 
         val layoutManager = LinearLayoutManager(this)
         this.recyclerView.layoutManager = layoutManager
+
+        this.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                val visibleItemCount = layoutManager.childCount
+                val totalItemCount = layoutManager.itemCount
+                val pastVisibleItems = layoutManager.findFirstVisibleItemPosition()
+
+                if (visibleItemCount + pastVisibleItems >= totalItemCount) {
+                    this@MainActivity.mainViewModel.get(++page)
+                }
+            }
+        })
     }
 
     override fun configureBehavior() {
