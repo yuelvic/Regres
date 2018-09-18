@@ -70,6 +70,7 @@ class MainActivity : BaseActivity() {
         })
 
         this.refreshLayout.setOnRefreshListener {
+            this.page = 1
             this.mainAdapter.clear()
             this.mainViewModel.get()
         }
