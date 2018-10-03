@@ -4,3 +4,4 @@
 
 ### Libraries
 * [Retrofit](https://square.github.io/retrofit/)
+* [Glide](https://github.com/bumptech/glide)
