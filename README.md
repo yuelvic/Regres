@@ -2,6 +2,8 @@
 
 ### Boilerplate code using the new [Android Architecture Components](https://developer.android.com/topic/libraries/architecture/)
 
+This code uses MVVM architecture.
+
 ### Services
 * [Reqres](https://reqres.in/)
 
